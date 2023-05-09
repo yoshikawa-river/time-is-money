@@ -1,0 +1,15 @@
+.stopwatch-content {
+    margin-top: 2rem;
+}
+
+.stopwatch-content__time {
+    font-size: 6rem;
+}
+
+.stopwatch-content__button-left {
+    margin-left: auto !important;
+}
+
+.stopwatch-content__button-right {
+    margin-right: auto !important;
+}

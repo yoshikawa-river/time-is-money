@@ -1,0 +1,9 @@
+.input {
+    margin-top: 4rem;
+    width: 100%;
+}
+
+.input__reward {
+    padding: 1rem ;
+    font-size: 1.5rem;
+}
