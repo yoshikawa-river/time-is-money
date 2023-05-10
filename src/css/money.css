@@ -3,14 +3,19 @@
 }
 
 .display-hourlywage-font {
-    font-size: 8rem;
+    font-size: 12rem;
 }
 
 .money-content__p {
     font-size: 3rem;
-    margin: 4rem 0;
+    margin: 0 auto;
 }
 
 .unit-font {
     font-size: 3rem;
+}
+
+.reward-error {
+    margin: 10px 0 0 20px !important;
+    font-size: 1.5rem !important;
 }

@@ -13,3 +13,14 @@
 .stopwatch-content__button-right {
     margin-right: auto !important;
 }
+
+.stopwatch-content__p {
+    font-size: 2rem;
+    margin: 4rem 0;
+}
+
+.select-time-error {
+    margin: 10px 0 0 0 !important;
+    width: 6.5rem;
+    font-size: 1rem !important;
+}

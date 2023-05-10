@@ -6,6 +6,17 @@
 }
 
 .main-content {
-    margin-top: 6rem;
+    margin-top: 3rem;
 }
 
+input {
+    text-align: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
