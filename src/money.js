@@ -30,7 +30,6 @@ export const Money = ({reward, elapsedTime}) => {
     }
 
     const toJapaneseYen = (amount) => {
-        console.log(amount);
         if (amount < 10000) {
             return amount;
         }
@@ -85,12 +84,11 @@ export const Money = ({reward, elapsedTime}) => {
                 </span>
             </p>
             <div className="money-content__p">
-                にほんえんひょうじ
                 <Switch
                     checked={isDisplayUnit}
                     onChange={changeDisplayUnit}
-                    // inputProps={{ 'aria-label': 'c' }}
                 />
+                <span className="ml-10">にほんえんひょうじ</span>
             </div>
         </div>
     );
