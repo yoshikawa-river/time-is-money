@@ -14,7 +14,7 @@ export const StopWatch = () => {
     // 経過時間（秒）
     const [startTime, setStartTime] = useState(0);
     // 時間の保存
-    const [time, setTime] = useState({h:'00', m:'00', s:'00'});
+    const [time, setTime] = useState({h:'00', m:'00', s:'00', ms:'00'});
     // ストップウォッチの状態
     const [isRunning, setRunning] = useState(false);
     // 時給計算用経過時間
@@ -60,7 +60,12 @@ export const StopWatch = () => {
             setStartTime(parsedData.startTime);
             setReward(parsedData.reward);
             setElapsedTime(parsedData.elapsedTime);
-            setTime({h:parsedData.time.h ?? '00', m:parsedData.time.m ?? '00', s:parsedData.time.s ?? '00'});
+            setTime({
+                h:parsedData.time.h ?? '00',
+                m:parsedData.time.m ?? '00',
+                s:parsedData.time.s ?? '00',
+                ms:parsedData.time.ms ?? '00'
+            });
         }
     };
 
@@ -87,8 +92,9 @@ export const StopWatch = () => {
         const hour = parseInt(startTime / 60 / 60, 10);
         const min = parseInt(startTime / 60 % 60, 10);
         const sec = parseInt(startTime % 60, 10);
+        const msec = parseInt(startTime * 1000);
 
-        setTime({h: toText(hour), m: toText(min), s: toText(sec)});
+        setTime({h: toText(hour), m: toText(min), s: toText(sec), ms: toText(msec)});
 
         const elapsedTime = Number(hour) + Number(min) / 60 + Number(sec) / 3600;
         setElapsedTime(elapsedTime);
@@ -120,8 +126,8 @@ export const StopWatch = () => {
     const onClickReset = () => {
         deleteLocalStorage();
         setRunning(false);
-        setStartTime(0);
-        setTime({h:'00', m:'00', s:'00'})
+        setStartTime(3600 * 60);
+        setTime({h:'00', m:'00', s:'00', ms:'00'})
         setElapsedTime(0);
         setDisabled({start: false, stop: true, reset: true})
     };
