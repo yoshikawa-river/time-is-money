@@ -10,7 +10,7 @@ export const Money = ({reward, elapsedTime}) => {
 
     useEffect(() => {
         if (reward > 0 && elapsedTime > 0) {
-            const houryWage = Math.round((reward / elapsedTime));
+            const houryWage = Math.round( (reward / elapsedTime) * 100 ) / 100;
             return setHourlyWage(houryWage);
         }
 
@@ -30,6 +30,7 @@ export const Money = ({reward, elapsedTime}) => {
     }
 
     const toJapaneseYen = (amount) => {
+        console.log(amount);
         if (amount < 10000) {
             return amount;
         }
@@ -38,7 +39,7 @@ export const Money = ({reward, elapsedTime}) => {
         let unitsIndex = 0;
         // 下4桁ずつ単位を振っていき、下の桁数が4桁未満になるまでループを回す
         while (amount >= 10000) {
-            let remainder = amount % 10000;
+            let remainder = Math.round( (amount % 10000) * 100 ) / 100;
             if (remainder === 0) {
                 // 割り切れる場合は単位を増やして次のループへ
                 amount /= 10000;
@@ -46,21 +47,43 @@ export const Money = ({reward, elapsedTime}) => {
                 continue;
             }
 
-            displayWage = String(Math.floor(remainder)) + " " + units[unitsIndex] + " " + displayWage;
+            displayWage =
+                    <>
+                        {String(remainder)}<span className="unit-font">{units[unitsIndex]}</span>{displayWage}
+                    </>;
             amount /= 10000;
             unitsIndex++;
         }
 
         // 最後の桁を追加
-        displayWage = String(Math.floor(amount)) + " " + units[unitsIndex] + " " + displayWage;
+        displayWage =
+                <>
+                    {String(Math.floor(amount))}<span className="unit-font">{units[unitsIndex]}</span>{displayWage}
+                </>;
 
         return displayWage;
     }
 
     return (
         <div>
-            <p className="money-content__p">ほうしゅう：<span className="display-reward-font">{isDisplayUnit ? toJapaneseYen(reward) : toCurrency(reward)}えん</span></p>
-            <p className="money-content__p">じきゅう：<span className="display-hourlywage-font">{isDisplayUnit ? toJapaneseYen(hourlyWage) : toCurrency(hourlyWage)}えん</span></p>
+            <p className="money-content__p">
+                ほうしゅう：
+                <span className="display-reward-font">
+                    {isDisplayUnit ? toJapaneseYen(reward) : toCurrency(reward)}
+                    <span className="unit-font">
+                        えん
+                    </span>
+                </span>
+            </p>
+            <p className="money-content__p">
+                じきゅう：
+                <span className="display-hourlywage-font">
+                    {isDisplayUnit ? toJapaneseYen(hourlyWage) : toCurrency(hourlyWage)}
+                    <span className="unit-font">
+                        えん
+                    </span>
+                </span>
+            </p>
             <div className="money-content__p">
                 にほんえんひょうじ
                 <Switch
