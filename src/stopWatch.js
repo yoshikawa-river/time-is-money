@@ -11,18 +11,16 @@ export const StopWatch = () => {
     const [reward, setReward] = useState(0);
     // 表示タイプ
     const [displayType, setDisplayType] = useState(true);
-    // 表示時間
-    const [displayTime, setDisplayTime] = useState("00:00:00");
-    // 現在の時間からマイナスするためのスタートした時間
+    // 経過時間（秒）
     const [startTime, setStartTime] = useState(0);
-    // 経過時間
-    const [calcTime, setcalcTime] = useState(0);
+    // 時間の保存
+    const [time, setTime] = useState({h:'00', m:'00', s:'00'});
     // ストップウォッチの状態
     const [isRunning, setRunning] = useState(false);
     // 時給計算用経過時間
     const [elapsedTime, setElapsedTime] = useState(0);
     // ボタンの状態
-    const [btnDisabled, setDisabled] = useState({start: false, stop: true, reset: false})
+    const [btnDisabled, setDisabled] = useState({start: false, stop: true, reset: false});
 
     useEffect(() => {
         loadLocalStorage();
@@ -43,8 +41,9 @@ export const StopWatch = () => {
     const saveLocalStorage = () => {
         const data = {
             reward: reward,
-            calcTime: calcTime,
+            startTime: startTime,
             elapsedTime: elapsedTime,
+            time: time
         };
 
         localStorage.setItem('stopwatch', JSON.stringify(data));
@@ -58,10 +57,10 @@ export const StopWatch = () => {
         const data = localStorage.getItem('stopwatch');
         if (data) {
             const parsedData = JSON.parse(data);
-            setStartTime(Date.now() - parsedData.calcTime);
+            setStartTime(parsedData.startTime);
             setReward(parsedData.reward);
-            setcalcTime(parsedData.calcTime);
             setElapsedTime(parsedData.elapsedTime);
+            setTime({h:parsedData.time.h ?? '00', m:parsedData.time.m ?? '00', s:parsedData.time.s ?? '00'});
         }
     };
 
@@ -70,7 +69,7 @@ export const StopWatch = () => {
 
         if (isRunning) {
             timerInterval = window.setInterval(() => {
-                setcalcTime(Date.now() - startTime);
+                setStartTime(startTime => startTime + 1);
             }, 1000);
         }
 
@@ -80,25 +79,25 @@ export const StopWatch = () => {
 
     }, [isRunning]);
 
+    const toText = (time) => {
+        return ('00' + time).slice(-2);
+    }
+
     useEffect(() => {
-        const currentTime = new Date(calcTime);
-        const hour = String(currentTime.getHours() - 8).padStart(2, "0");
-        const min = String(currentTime.getMinutes()).padStart(2, "0");
-        const sec = String(currentTime.getSeconds()).padStart(2, "0");
+        const hour = parseInt(startTime / 60 / 60, 10);
+        const min = parseInt(startTime / 60 % 60, 10);
+        const sec = parseInt(startTime % 60, 10);
 
-        //　ミリ秒表示
-        // const msec = String(currentTime.getMilliseconds()).padStart(3, "0");
-        // setDisplayTime(`${h}:${m}:${s}:${ms}`);
-
-        setDisplayTime(`${hour}:${min}:${sec}`);
+        setTime({h: toText(hour), m: toText(min), s: toText(sec)});
 
         const elapsedTime = Number(hour) + Number(min) / 60 + Number(sec) / 3600;
         setElapsedTime(elapsedTime);
-    }, [calcTime]);
 
-    const onClickDisplayType = () => {
-        setDisplayType(!displayType);
-    };
+    }, [startTime]);
+
+    // const onClickDisplayType = () => {
+    //     setDisplayType(!displayType);
+    // };
 
     const onChangeReward = (value) => {
         setReward(value);
@@ -106,7 +105,7 @@ export const StopWatch = () => {
     }
 
     const onClickStart = () => {
-        setStartTime(Date.now() - calcTime);
+        setStartTime(startTime);
         setRunning(true);
         setDisabled({start: true, stop: false, reset: false})
         saveLocalStorage();
@@ -121,8 +120,8 @@ export const StopWatch = () => {
     const onClickReset = () => {
         deleteLocalStorage();
         setRunning(false);
-        setDisplayTime("00:00:00");
-        setcalcTime(0);
+        setStartTime(0);
+        setTime({h:'00', m:'00', s:'00'})
         setElapsedTime(0);
         setDisabled({start: false, stop: true, reset: true})
     };
@@ -134,7 +133,7 @@ export const StopWatch = () => {
                 <InputReward reward={reward} onChange={onChangeReward} placeholder={'報酬金額'} startBtnState={btnDisabled.start}/>
                 <Money reward={reward} elapsedTime={elapsedTime} />
                 <div className="stopwatch-content">
-                    <time className="stopwatch-content__time">{displayTime}</time>
+                    <time className="stopwatch-content__time">{time.h}:{time.m}:{time.s}</time>
                     <Stack direction="row" spacing={2}>
                         <Button className="stopwatch-content__button-left" variant="contained" onClick={onClickStart} disabled={btnDisabled.start}>スタート</Button>
                         <Button variant="contained" onClick={onClickStop} disabled={btnDisabled.stop}>ストップ</Button>
