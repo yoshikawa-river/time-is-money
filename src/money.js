@@ -23,11 +23,16 @@ export const Money = ({reward, elapsedTime}) => {
     };
 
     const toCurrency = (amount) => {
-        const formatter = new Intl.NumberFormat("ja-JP",{
-            maximumFractionDigits: 0
-        })
+        // console.log(amount);
 
-        return formatter.format(amount);
+        return <NumberEasing
+                    value={amount}
+                    thousandSeparator={true}
+                    thousandsGroupStyle="thousand"
+                    speed={500}
+                    decimals={2}
+                    ease='circInOut'
+                />;
     }
 
     const toJapaneseYen = (amount) => {
@@ -51,9 +56,9 @@ export const Money = ({reward, elapsedTime}) => {
                     <>
                         <NumberEasing
                             value={remainder}
-                            speed={100}
+                            speed={500}
                             decimals={2}
-                            ease='quintInOut'
+                            ease='expoInOut'
                         />
                         <span className="unit-font">{units[unitsIndex]}</span>{displayWage}
                     </>;
@@ -65,10 +70,9 @@ export const Money = ({reward, elapsedTime}) => {
         displayWage =
                 <>
                     <NumberEasing
-                        value={amount}
-                        speed={100}
-                        // decimals={0}
-                        ease='quintInOut'
+                        value={Math.floor(amount)}
+                        speed={500}
+                        ease='elasticIn'
                     />
                     <span className="unit-font">{units[unitsIndex]}</span>{displayWage}
                 </>;
