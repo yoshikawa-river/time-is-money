@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Switch from '@mui/material/Switch';
+import NumberEasing from 'react-number-easing';
 import './css/money.css';
 
 export const Money = ({reward, elapsedTime}) => {
@@ -48,7 +49,13 @@ export const Money = ({reward, elapsedTime}) => {
 
             displayWage =
                     <>
-                        {String(remainder)}<span className="unit-font">{units[unitsIndex]}</span>{displayWage}
+                        <NumberEasing
+                            value={remainder}
+                            speed={100}
+                            decimals={2}
+                            ease='quintInOut'
+                        />
+                        <span className="unit-font">{units[unitsIndex]}</span>{displayWage}
                     </>;
             amount /= 10000;
             unitsIndex++;
@@ -57,7 +64,13 @@ export const Money = ({reward, elapsedTime}) => {
         // 最後の桁を追加
         displayWage =
                 <>
-                    {String(Math.floor(amount))}<span className="unit-font">{units[unitsIndex]}</span>{displayWage}
+                    <NumberEasing
+                        value={amount}
+                        speed={100}
+                        // decimals={0}
+                        ease='quintInOut'
+                    />
+                    <span className="unit-font">{units[unitsIndex]}</span>{displayWage}
                 </>;
 
         return displayWage;
