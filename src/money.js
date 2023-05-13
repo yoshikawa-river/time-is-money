@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import Switch from '@mui/material/Switch';
 import NumberEasing from 'react-number-easing';
 import './css/money.css';
+import CountUp from 'react-countup';
 
 export const Money = ({reward, elapsedTime}) => {
+    const [beforeHourlyWage, setBeforeWage] = useState(0);
     const [hourlyWage, setHourlyWage] = useState(0);
     const [isDisplayUnit, setDisplayUnit] = useState(true);
 
@@ -11,28 +13,38 @@ export const Money = ({reward, elapsedTime}) => {
 
     useEffect(() => {
         if (reward > 0 && elapsedTime > 0) {
-            const houryWage = Math.round( (reward / elapsedTime) * 100 ) / 100;
+            // アニメーション用に経過時間から1秒引いたものの時給も計算しておく
+            const beforeHourlyWage = calcHouryWage(elapsedTime  - (1 / 3600));
+            setBeforeWage(beforeHourlyWage);
+
+            const houryWage = calcHouryWage(elapsedTime);
             return setHourlyWage(houryWage);
         }
 
         setHourlyWage(0);
     });
 
+    const calcHouryWage = (time) => {
+        return Math.round( (reward / time) * 100 ) / 100;
+    }
+
     const changeDisplayUnit = () => {
         setDisplayUnit(!isDisplayUnit);
     };
 
-    const toCurrency = (amount) => {
-        // console.log(amount);
-
-        return <NumberEasing
-                    value={amount}
-                    thousandSeparator={true}
-                    thousandsGroupStyle="thousand"
-                    speed={500}
-                    decimals={2}
-                    ease='circInOut'
-                />;
+    const toCurrency = (amount, type) => {
+        if (type === 'reward') {
+            return new Intl.NumberFormat().format(amount);
+        } else {
+            return <CountUp
+                        start={beforeHourlyWage}
+                        end={amount}
+                        duration={0.5}
+                        separator=","
+                        decimals={2}
+                        decimal="."
+                    />;
+        }
     }
 
     const toJapaneseYen = (amount) => {
@@ -85,7 +97,7 @@ export const Money = ({reward, elapsedTime}) => {
             <p className="money-content__p">
                 ほうしゅう：
                 <span className="display-reward-font">
-                    {isDisplayUnit ? toJapaneseYen(reward) : toCurrency(reward)}
+                    {isDisplayUnit ? toJapaneseYen(reward) : toCurrency(reward, 'reward')}
                     <span className="unit-font">
                         えん
                     </span>
@@ -94,7 +106,7 @@ export const Money = ({reward, elapsedTime}) => {
             <p className="money-content__p">
                 じきゅう：
                 <span className="display-hourlywage-font">
-                    {isDisplayUnit ? toJapaneseYen(hourlyWage) : toCurrency(hourlyWage)}
+                    {isDisplayUnit ? toJapaneseYen(hourlyWage) : toCurrency(hourlyWage, 'wage')}
                     <span className="unit-font">
                         えん
                     </span>
