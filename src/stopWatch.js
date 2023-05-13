@@ -38,7 +38,10 @@ export const StopWatch = () => {
         worker = new stopWatchWorker();
 
         return () => {
-            worker.terminate();
+            if (worker) {
+                worker.terminate();
+                worker = null;
+            }
         };
     }, []);
 
@@ -184,8 +187,10 @@ export const StopWatch = () => {
         setRunning(false);
         setStartTime(0);
         worker.postMessage({type: type.reset, startTime: startTime, timerId: timerId});
-        worker.terminate();
-        worker = null;
+        if (worker) {
+            worker.terminate();
+            worker = null;
+        }
         setTime({h:'00', m:'00', s:'00', ms:'00'});
         setElapsedTime(0);
         setDisabled({start: false, stop: true, reset: true})
