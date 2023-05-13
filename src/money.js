@@ -39,7 +39,7 @@ export const Money = ({reward, elapsedTime}) => {
             return <CountUp
                         start={beforeHourlyWage}
                         end={amount}
-                        duration={0.5}
+                        duration={1}
                         separator=","
                         decimals={2}
                         decimal="."
@@ -64,17 +64,20 @@ export const Money = ({reward, elapsedTime}) => {
                 continue;
             }
 
+            amount /= 10000;
+
+            const decimals = amount > 10000 ? 2 : 0;
+
             displayWage =
                     <>
                         <NumberEasing
                             value={remainder}
-                            speed={500}
-                            decimals={2}
+                            speed={1000}
+                            decimals={decimals}
                             ease='expoInOut'
                         />
                         <span className="unit-font">{units[unitsIndex]}</span>{displayWage}
                     </>;
-            amount /= 10000;
             unitsIndex++;
         }
 
@@ -83,7 +86,7 @@ export const Money = ({reward, elapsedTime}) => {
                 <>
                     <NumberEasing
                         value={Math.floor(amount)}
-                        speed={500}
+                        speed={1000}
                         ease='elasticIn'
                     />
                     <span className="unit-font">{units[unitsIndex]}</span>{displayWage}
