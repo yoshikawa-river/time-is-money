@@ -5,9 +5,11 @@ import { InputTime } from "./inputTime";
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
+import stopWatchWorker from './stopWatch.worker.js';
 import "./css/main.css"
 import "./css/stopwatch.css";
 
+let worker;
 
 export const StopWatch = () => {
     // 報酬額
@@ -26,9 +28,18 @@ export const StopWatch = () => {
     const [btnDisabled, setDisabled] = useState({start: false, stop: true, reset: false});
     // 時間指定の可否
     const [isSelectTime, setSelectTime] = useState(false);
+    // worker用
+    const type = {start: 'start', stop: 'stop', reset: 'reset'};
+
+    const [timerId, setTimerId] = useState(null);
 
     useEffect(() => {
         loadLocalStorage();
+        worker = new stopWatchWorker();
+
+        return () => {
+            worker.terminate();
+        };
     }, []);
 
     useEffect(() => {
@@ -75,18 +86,11 @@ export const StopWatch = () => {
     };
 
     useEffect(() => {
-        let timerInterval;
-
         if (isRunning) {
-            timerInterval = window.setInterval(() => {
-                setStartTime(startTime => startTime + 1);
-            }, 1000);
+            worker.addEventListener('message', (e) => {
+                setStartTime(e.data.startTime);
+            });
         }
-
-        return () => {
-            window.clearInterval(timerInterval);
-        };
-
     }, [isRunning]);
 
     const toText = (time, unit) => {
@@ -156,9 +160,20 @@ export const StopWatch = () => {
         setRunning(true);
         setDisabled({start: true, stop: false, reset: false})
         saveLocalStorage();
+
+        if (!worker) {
+            worker = new stopWatchWorker();
+        }
+
+        worker.postMessage({type: type.start, startTime: startTime});
+
+        worker.addEventListener('message', (e) => {
+            setTimerId(e.data.timerId);
+        });
     };
 
     const onClickStop = () => {
+        worker.postMessage({type: type.stop, startTime: startTime, timerId: timerId});
         setRunning(false);
         setDisabled({start: false, stop: true, reset: false});
         saveLocalStorage();
@@ -168,6 +183,9 @@ export const StopWatch = () => {
         deleteLocalStorage();
         setRunning(false);
         setStartTime(0);
+        worker.postMessage({type: type.reset, startTime: startTime, timerId: timerId});
+        worker.terminate();
+        worker = null;
         setTime({h:'00', m:'00', s:'00', ms:'00'});
         setElapsedTime(0);
         setDisabled({start: false, stop: true, reset: true})
