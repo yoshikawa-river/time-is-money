@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
+    "@koale/useworker": "^4.0.2",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.3",
     "@testing-library/jest-dom": "^5.16.5",
@@ -14,6 +15,7 @@
     "react-countdown": "^2.3.5",
     "react-countup": "^6.4.2",
     "react-dom": "^18.2.0",
+    "react-hooks-worker": "^1.0.4",
     "react-number-easing": "^1.0.2",
     "react-odometerjs": "^3.1.0",
     "react-scripts": "5.0.1",
@@ -21,9 +23,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -43,5 +45,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "customize-cra": "^1.0.0",
+    "react-app-rewired": "^2.2.1",
+    "worker-loader": "^3.0.8"
   }
 }
