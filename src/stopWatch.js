@@ -10,7 +10,6 @@ import "./css/main.css"
 import "./css/stopwatch.css";
 
 let worker;
-let isActive = true;
 
 export const StopWatch = () => {
     // 報酬額
@@ -162,30 +161,25 @@ export const StopWatch = () => {
     const onClickStart = () => {
         setStartTime(startTime);
         setRunning(true);
-        setDisabled({start: true, stop: false, reset: false})
         saveLocalStorage();
 
         if (!worker) {
             worker = new stopWatchWorker();
         }
 
-        if (isActive) {
-            worker.postMessage({type: type.start, startTime: startTime});
-            isActive = false;
-        }
+        worker.postMessage({type: type.start, startTime: startTime});
 
         worker.addEventListener('message', (e) => {
             setTimerId(e.data.timerId);
+            setDisabled({start: true, stop: false, reset: false})
         });
     };
 
     const onClickStop = () => {
-        if (!isActive) {
-            worker.postMessage({type: type.stop, startTime: startTime, timerId: timerId});
-            isActive = true;
-        }
+        worker.postMessage({type: type.stop, startTime: startTime, timerId: timerId});
         setRunning(false);
         setDisabled({start: false, stop: true, reset: false});
+        worker.postMessage({type: type.stop, startTime: startTime, timerId: timerId});
         saveLocalStorage();
     };
 
@@ -193,14 +187,14 @@ export const StopWatch = () => {
         deleteLocalStorage();
         setRunning(false);
         setStartTime(0);
+        setTime({h:'00', m:'00', s:'00', ms:'00'});
+        setElapsedTime(0);
+        setDisabled({start: false, stop: true, reset: true})
         worker.postMessage({type: type.reset, startTime: startTime, timerId: timerId});
         if (worker) {
             worker.terminate();
             worker = null;
         }
-        setTime({h:'00', m:'00', s:'00', ms:'00'});
-        setElapsedTime(0);
-        setDisabled({start: false, stop: true, reset: true})
     };
 
     return (
