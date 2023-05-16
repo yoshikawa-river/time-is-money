@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Money } from "./money";
 import { InputReward } from "./inputReward";
 import { InputTime } from "./inputTime";
+import { Helmet } from 'react-helmet';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
@@ -198,36 +199,42 @@ export const StopWatch = () => {
     };
 
     return (
-        <div className="main">
-            <div className="main-content">
-                {/* <button onChange={onClickDisplayType}>換算方法切替</button> */}
-                <InputReward reward={reward} onChange={onChangeReward} placeholder={'報酬金額'} startBtnState={btnDisabled.start}/>
-                <Money reward={reward} elapsedTime={elapsedTime} />
-                <div className="stopwatch-content">
-                    <div className="stopwatch-content__p">
-                        <Switch
-                            checked={isSelectTime}
-                            onChange={changeSelectTime}
-                        />
-                        <span className="ml-10">じかんをしていする</span>
+        <>
+            <Helmet>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1221419635842079"
+                crossorigin="anonymous"></script>
+            </Helmet>
+            <div className="main">
+                <div className="main-content">
+                    {/* <button onChange={onClickDisplayType}>換算方法切替</button> */}
+                    <InputReward reward={reward} onChange={onChangeReward} placeholder={'報酬金額'} startBtnState={btnDisabled.start}/>
+                    <Money reward={reward} elapsedTime={elapsedTime} />
+                    <div className="stopwatch-content">
+                        <div className="stopwatch-content__p">
+                            <Switch
+                                checked={isSelectTime}
+                                onChange={changeSelectTime}
+                            />
+                            <span className="ml-10">じかんをしていする</span>
+                        </div>
+                        {
+                            isSelectTime && (
+                                <Stack direction="row" spacing={2} className="text-center">
+                                    <InputTime time={time.h} onChange={changeTime} timeUnit={'hour'} startBtnState={btnDisabled.start} inputStyle="stopwatch-content__button-left" />
+                                    <InputTime time={time.m} onChange={changeTime} timeUnit={'min'} startBtnState={btnDisabled.start} />
+                                    <InputTime time={time.s} onChange={changeTime} timeUnit={'sec'} startBtnState={btnDisabled.start} inputStyle="stopwatch-content__button-right" />
+                                </Stack>
+                            )
+                        }
+                        <time className="stopwatch-content__time">{time.h}:{time.m}:{time.s}</time>
+                        <Stack direction="row" spacing={2}>
+                            <Button className="stopwatch-content__button-left" variant="contained" onClick={onClickStart} disabled={btnDisabled.start}>スタート</Button>
+                            <Button variant="contained" onClick={onClickStop} disabled={btnDisabled.stop}>ストップ</Button>
+                            <Button className="stopwatch-content__button-right" variant="contained" onClick={onClickReset} disabled={btnDisabled.reset}>リセット</Button>
+                        </Stack>
                     </div>
-                    {
-                        isSelectTime && (
-                            <Stack direction="row" spacing={2} className="text-center">
-                                <InputTime time={time.h} onChange={changeTime} timeUnit={'hour'} startBtnState={btnDisabled.start} inputStyle="stopwatch-content__button-left" />
-                                <InputTime time={time.m} onChange={changeTime} timeUnit={'min'} startBtnState={btnDisabled.start} />
-                                <InputTime time={time.s} onChange={changeTime} timeUnit={'sec'} startBtnState={btnDisabled.start} inputStyle="stopwatch-content__button-right" />
-                            </Stack>
-                        )
-                    }
-                    <time className="stopwatch-content__time">{time.h}:{time.m}:{time.s}</time>
-                    <Stack direction="row" spacing={2}>
-                        <Button className="stopwatch-content__button-left" variant="contained" onClick={onClickStart} disabled={btnDisabled.start}>スタート</Button>
-                        <Button variant="contained" onClick={onClickStop} disabled={btnDisabled.stop}>ストップ</Button>
-                        <Button className="stopwatch-content__button-right" variant="contained" onClick={onClickReset} disabled={btnDisabled.reset}>リセット</Button>
-                    </Stack>
                 </div>
-            </div>
         </div>
+        </>
     );
 };
