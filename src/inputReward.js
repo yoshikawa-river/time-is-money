@@ -41,7 +41,8 @@ export const InputReward = ({ reward, onChange, placeholder, startBtnState }) =>
                             endAdornment={<InputAdornment position="end">えん</InputAdornment>}
                             inputProps={{
                                 'aria-label': 'yen',
-                                style: { 'fontSize': '2rem' }
+                                style: { 'fontSize': '2rem' },
+                                maxLength: "16"
                             }}
                             disabled={startBtnState}
                         />
@@ -56,7 +57,8 @@ export const InputReward = ({ reward, onChange, placeholder, startBtnState }) =>
                             endAdornment={<InputAdornment position="end">えん</InputAdornment>}
                             inputProps={{
                                 'aria-label': 'yen',
-                                style: { 'fontSize': '2rem' }
+                                style: { 'fontSize': '2rem' },
+                                maxLength: "16"
                             }}
                             disabled={startBtnState}
                         />
