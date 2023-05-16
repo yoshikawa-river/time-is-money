@@ -66,7 +66,7 @@ export const Money = ({reward, elapsedTime}) => {
 
             amount /= 10000;
 
-            const decimals = amount > 10000 ? 0 : 2;
+            const decimals = unitsIndex === 0 ? 2 : 0;
 
             displayWage =
                     <>

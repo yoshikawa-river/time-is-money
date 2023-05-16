@@ -10,6 +10,7 @@ import "./css/main.css"
 import "./css/stopwatch.css";
 
 let worker;
+let isActive = true;
 
 export const StopWatch = () => {
     // 報酬額
@@ -168,7 +169,10 @@ export const StopWatch = () => {
             worker = new stopWatchWorker();
         }
 
-        worker.postMessage({type: type.start, startTime: startTime});
+        if (isActive) {
+            worker.postMessage({type: type.start, startTime: startTime});
+            isActive = false;
+        }
 
         worker.addEventListener('message', (e) => {
             setTimerId(e.data.timerId);
@@ -176,7 +180,10 @@ export const StopWatch = () => {
     };
 
     const onClickStop = () => {
-        worker.postMessage({type: type.stop, startTime: startTime, timerId: timerId});
+        if (!isActive) {
+            worker.postMessage({type: type.stop, startTime: startTime, timerId: timerId});
+            isActive = true;
+        }
         setRunning(false);
         setDisabled({start: false, stop: true, reset: false});
         saveLocalStorage();
