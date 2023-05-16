@@ -9,7 +9,7 @@ export const Money = ({reward, elapsedTime}) => {
     const [hourlyWage, setHourlyWage] = useState(0);
     const [isDisplayUnit, setDisplayUnit] = useState(true);
 
-    const units = ['', 'まん', 'おく', 'ちょう', 'けい', 'がい', 'じょ', 'じょう', 'こう', 'かん', 'せい', 'さい', 'ごく', 'ごうがしゃ', 'あそぎ', 'なゆた', 'ふかしぎ', 'むりょうたいすう'];
+    const units = ['えん', 'まん', 'おく', 'ちょう', 'けい', 'がい', 'じょ', 'じょう', 'こう', 'かん', 'せい', 'さい', 'ごく', 'ごうがしゃ', 'あそぎ', 'なゆた', 'ふかしぎ', 'むりょうたいすう'];
 
     useEffect(() => {
         if (reward > 0 && elapsedTime > 0) {
@@ -57,39 +57,51 @@ export const Money = ({reward, elapsedTime}) => {
         // 下4桁ずつ単位を振っていき、下の桁数が4桁未満になるまでループを回す
         while (amount >= 10000) {
             let remainder = Math.round( (amount % 10000) * 100 ) / 100;
-            if (remainder === 0) {
-                // 割り切れる場合は単位を増やして次のループへ
-                amount /= 10000;
-                unitsIndex++;
-                continue;
-            }
+            // 真ん中の部分を消してしまうと、
+            // if (remainder === 0) {
+            //     // 割り切れる場合は単位を増やして次のループへ
+            //     amount /= 10000;
+            //     unitsIndex++;
+            //     continue;
+            // }
 
             amount /= 10000;
 
             const decimals = unitsIndex === 0 ? 2 : 0;
 
+            const style = `display-hourlywage-content-${unitsIndex} display-hourlywage-content`
+
             displayWage =
                     <>
-                        <NumberEasing
-                            value={remainder}
-                            speed={1000}
-                            decimals={decimals}
-                            ease='expoInOut'
-                        />
-                        <span className="unit-font">{units[unitsIndex]}</span>{displayWage}
+                        <div className="flex">
+                            <div className={style}>
+                                <NumberEasing
+                                    value={remainder}
+                                    speed={1000}
+                                    decimals={decimals}
+                                    ease='expoInOut'
+                                />
+                            </div>
+                            <div className="unit-font">{units[unitsIndex]}</div>{displayWage}
+                        </div>
                     </>;
             unitsIndex++;
         }
 
+        const style = `display-hourlywage-content-${unitsIndex} display-hourlywage-content`
         // 最後の桁を追加
         displayWage =
                 <>
-                    <NumberEasing
-                        value={Math.floor(amount)}
-                        speed={1000}
-                        ease='elasticIn'
-                    />
-                    <span className="unit-font">{units[unitsIndex]}</span>{displayWage}
+                    <div className="flex">
+                        <div className={style}>
+                            <NumberEasing
+                                value={Math.floor(amount)}
+                                speed={1000}
+                                ease='elasticIn'
+                            />
+                        </div>
+                        <div className="unit-font">{units[unitsIndex]}</div>{displayWage}
+                    </div>
                 </>;
 
         return displayWage;
@@ -101,19 +113,19 @@ export const Money = ({reward, elapsedTime}) => {
                 ほうしゅう：
                 <span className="display-reward-font">
                     {isDisplayUnit ? toJapaneseYen(reward) : toCurrency(reward, 'reward')}
-                    <span className="unit-font">
+                    {/* <span className="unit-font">
                         えん
-                    </span>
+                    </span> */}
                 </span>
             </p>
             <p className="money-content__p">
                 じきゅう：
-                <span className="display-hourlywage-font">
+                <div className="display-hourlywage-container flex">
                     {isDisplayUnit ? toJapaneseYen(hourlyWage) : toCurrency(hourlyWage, 'wage')}
-                    <span className="unit-font">
+                    {/* <span className="unit-font">
                         えん
-                    </span>
-                </span>
+                    </span> */}
+                </div>
             </p>
             <div className="money-content__p">
                 <Switch
