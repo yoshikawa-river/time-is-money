@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Money } from "./money";
 import { InputReward } from "./inputReward";
 import { InputTime } from "./inputTime";
-import { Helmet } from 'react-helmet';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
@@ -200,10 +199,6 @@ export const StopWatch = () => {
 
     return (
         <>
-            <Helmet>
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1221419635842079"
-                crossorigin="anonymous"></script>
-            </Helmet>
             <div className="main">
                 <div className="main-content">
                     {/* <button onChange={onClickDisplayType}>換算方法切替</button> */}
