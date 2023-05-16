@@ -9,7 +9,7 @@ export const Money = ({reward, elapsedTime}) => {
     const [hourlyWage, setHourlyWage] = useState(0);
     const [isDisplayUnit, setDisplayUnit] = useState(true);
 
-    const units = ['', 'まん', 'おく', '兆', '京', '垓', '𥝱', '穣', '溝', '澗', '正', '載', '極', '恒河沙', '阿僧祇', '那由他', '不可思議', '無量大数'];
+    const units = ['', 'まん', 'おく', 'ちょう', 'けい', 'がい', 'じょ', 'じょう', 'こう', 'かん', 'せい', 'さい', 'ごく', 'ごうがしゃ', 'あそぎ', 'なゆた', 'ふかしぎ', 'むりょうたいすう'];
 
     useEffect(() => {
         if (reward > 0 && elapsedTime > 0) {
