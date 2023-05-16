@@ -47,7 +47,7 @@ export const Money = ({reward, elapsedTime}) => {
         }
     }
 
-    const toJapaneseYen = (amount) => {
+    const toJapaneseYen = (amount, type) => {
         if (amount < 10000) {
             return amount;
         }
@@ -57,13 +57,30 @@ export const Money = ({reward, elapsedTime}) => {
         // 下4桁ずつ単位を振っていき、下の桁数が4桁未満になるまでループを回す
         while (amount >= 10000) {
             let remainder = Math.round( (amount % 10000) * 100 ) / 100;
-            // 真ん中の部分を消してしまうと、
-            // if (remainder === 0) {
-            //     // 割り切れる場合は単位を増やして次のループへ
-            //     amount /= 10000;
-            //     unitsIndex++;
-            //     continue;
-            // }
+
+            if (type === 'reward') {
+                // 報酬額表示の場合は0の桁は飛ばす。
+                if (remainder === 0) {
+                    amount /= 10000;
+                    unitsIndex++;
+                    continue;
+                }
+
+                displayWage =
+                    <>
+                        <div className="flex">
+                            <div className="display-reward-content">
+                                {Math.floor(remainder)}
+                            </div>
+                            <div className="reward-unit-font">{units[unitsIndex]}</div>{displayWage}
+                        </div>
+                </>
+
+                amount /= 10000;
+                unitsIndex++;
+
+                continue;
+            }
 
             amount /= 10000;
 
@@ -88,21 +105,33 @@ export const Money = ({reward, elapsedTime}) => {
             unitsIndex++;
         }
 
-        const style = `display-hourlywage-content-${unitsIndex} display-hourlywage-content`
-        // 最後の桁を追加
-        displayWage =
+        if (type === 'reward') {
+            displayWage =
                 <>
-                    <div className="flex">
-                        <div className={style}>
-                            <NumberEasing
-                                value={Math.floor(amount)}
-                                speed={1000}
-                                ease='elasticIn'
-                            />
+                    <div className="flex  display-reward-container">
+                        <div className="display-reward-content">
+                            {Math.floor(amount)}
                         </div>
-                        <div className="unit-font">{units[unitsIndex]}</div>{displayWage}
+                        <div className="reward-unit-font">{units[unitsIndex]}</div>{displayWage}
                     </div>
-                </>;
+                </>
+        } else {
+            const style = `display-hourlywage-content-${unitsIndex} display-hourlywage-content`
+            // 最後の桁を追加
+            displayWage =
+                    <>
+                        <div className="flex">
+                            <div className={style}>
+                                <NumberEasing
+                                    value={Math.floor(amount)}
+                                    speed={1000}
+                                    ease='elasticIn'
+                                />
+                            </div>
+                            <div className="unit-font">{units[unitsIndex]}</div>{displayWage}
+                        </div>
+                    </>;
+        }
 
         return displayWage;
     }
@@ -110,18 +139,18 @@ export const Money = ({reward, elapsedTime}) => {
     return (
         <div>
             <p className="money-content__p">
-                ほうしゅう：
-                <span className="display-reward-font">
-                    {isDisplayUnit ? toJapaneseYen(reward) : toCurrency(reward, 'reward')}
+                ほうしゅう
+                <span className="display-reward-container flex">
+                    {isDisplayUnit ? toJapaneseYen(reward, 'reward') : toCurrency(reward, 'reward')}
                     {/* <span className="unit-font">
                         えん
                     </span> */}
                 </span>
             </p>
             <p className="money-content__p">
-                じきゅう：
+                じきゅう
                 <div className="display-hourlywage-container flex">
-                    {isDisplayUnit ? toJapaneseYen(hourlyWage) : toCurrency(hourlyWage, 'wage')}
+                    {isDisplayUnit ? toJapaneseYen(hourlyWage, 'wage') : toCurrency(hourlyWage, 'wage')}
                     {/* <span className="unit-font">
                         えん
                     </span> */}

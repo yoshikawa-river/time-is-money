@@ -1,5 +1,26 @@
-.display-reward-font {
+.display-reward-container {
+    justify-content: center;
+}
+
+.display-hourlywage-container {
+    font-size: 10rem;
+    justify-content: center;
+}
+
+.display-reward-content {
     font-size: 5rem;
+    width: 9rem;
+    justify-content: center;
+    text-align: end;
+}
+
+.display-hourlywage-content {
+    text-align: end;
+    width: 21rem;
+}
+
+.display-hourlywage-content-0 {
+    width: 35rem;
 }
 
 .display-hourlywage-font {
@@ -8,14 +29,30 @@
 
 .money-content__p {
     font-size: 3rem;
-    margin: 0 auto;
+    margin: 0 auto 3rem;
 }
 
 .unit-font {
     font-size: 3rem;
+    width: 9rem;
+    align-self: flex-end;
+    padding-bottom: 1.5rem;
 }
 
 .reward-error {
     margin: 10px 0 0 20px !important;
     font-size: 1.5rem !important;
+}
+
+.money-content__wage-p {
+    font-size: 3rem;
+    margin: 3rem 0 0 0;
+}
+
+.reward-unit-font {
+    font-size: 3rem;
+    width: 6rem;
+    align-self: flex-end;
+    padding: 0 0.5rem 0.5rem 0.5rem;
+    text-align: end;
 }

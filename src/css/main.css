@@ -24,3 +24,11 @@ input {
 .ml-10 {
     margin-left: 10px;
 }
+
+.flex {
+    display: flex;
+}
+
+.w-full {
+    width: 100%;
+}
