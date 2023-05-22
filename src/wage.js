@@ -80,7 +80,11 @@ export const Wage = ({inputWage, elapsedTime}) => {
 
             amount /= 10000;
 
-            const decimals = unitsIndex === 0 ? 2 : 0;
+            let decimals = 2;
+            if (unitsIndex !== 0) {
+                decimals = 0;
+                remainder = Math.floor(remainder);
+            }
 
             const style = `display-hourlywage-content-${unitsIndex} display-hourlywage-content`
 
