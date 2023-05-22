@@ -117,14 +117,19 @@ export const Wage = ({inputWage, elapsedTime}) => {
                 </>
         } else {
             const style = `display-hourlywage-content-${unitsIndex} display-hourlywage-content`
-            const decimals = unitsIndex === 0 ? 2 : 0;
+            let decimals = 2;
+            if (unitsIndex !== 0) {
+                decimals = 0;
+                amount = Math.floor(amount);
+            }
+
             // 最後の桁を追加
             displayWage =
                     <>
                         <div className="flex">
                             <div className={style}>
                                 <NumberEasing
-                                    value={Math.floor(amount)}
+                                    value={amount}
                                     speed={1000}
                                     decimals={decimals}
                                     ease='linear'
