@@ -11,7 +11,7 @@ import "./css/stopwatch.css";
 
 let worker;
 
-export const StopWatch = () => {
+export const RewardStopWatch = () => {
     // 報酬額
     const [reward, setReward] = useState(0);
     // 表示タイプ

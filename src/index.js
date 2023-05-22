@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {StopWatch} from './stopWatch';
+import {RewardStopWatch} from './rewardStopWatch';
 import Header from './header';
 
 // const root = ReactDOM.render(document.getElementById('root'));
@@ -11,7 +11,7 @@ ReactDOM.render(
   <React.StrictMode>
     {/* <App /> */}
     <Header />
-    <StopWatch />
+    <RewardStopWatch />
   </React.StrictMode>
 , document.getElementById('root'));
 
