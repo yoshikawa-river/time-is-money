@@ -96,7 +96,7 @@ export const Wage = ({inputWage, elapsedTime}) => {
                                     value={remainder}
                                     speed={1000}
                                     decimals={decimals}
-                                    ease='quintInOut'
+                                    ease='linear'
                                 />
                             </div>
                             <div className="unit-font">{units[unitsIndex]}</div>{displayWage}
@@ -127,7 +127,7 @@ export const Wage = ({inputWage, elapsedTime}) => {
                                     value={Math.floor(amount)}
                                     speed={1000}
                                     decimals={decimals}
-                                    ease='quintInOut'
+                                    ease='linear'
                                 />
                             </div>
                             <div className="unit-font">{units[unitsIndex]}</div>{displayWage}
