@@ -20,12 +20,12 @@ export default function Header({onChange}) {
             aria-label="secondary tabs example"
         >
             <Tab
-                style={{ 'fontSize': '2rem', 'width': '100%', 'fontWeight': 'bold', 'margin-left':'auto' }}
+                style={{ 'fontSize': '2rem', 'width': '100%', 'fontWeight': 'bold', 'marginLeft':'auto' }}
                 value={0}
                 label="ほうしゅうがた"
             />
             <Tab
-                style={{ 'fontSize': '2rem', 'width': '100%', 'fontWeight': 'bold', 'margin-right':'auto'}}
+                style={{ 'fontSize': '2rem', 'width': '100%', 'fontWeight': 'bold', 'marginRight':'auto'}}
                 value={1}
                 label="じきゅうがた"
             />
