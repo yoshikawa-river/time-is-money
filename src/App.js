@@ -24,6 +24,9 @@ function App() {
                     <WageStopWatch />
                 )
             }
+            <div className='cp-write'>
+                <p>© 2023 Y.Y. All rights reserved.</p>
+            </div>
         </>
     );
 }
