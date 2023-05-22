@@ -4,11 +4,12 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import './css/header.css';
 
-export default function Header() {
+export default function Header({onChange}) {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
+        onChange(newValue);
     };
 
     return (

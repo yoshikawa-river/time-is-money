@@ -201,7 +201,6 @@ export const RewardStopWatch = () => {
         <>
             <div className="main">
                 <div className="main-content">
-                    {/* <button onChange={onClickDisplayType}>換算方法切替</button> */}
                     <InputReward reward={reward} onChange={onChangeReward} placeholder={'報酬金額'} startBtnState={btnDisabled.start}/>
                     <Money reward={reward} elapsedTime={elapsedTime} />
                     <div className="stopwatch-content">
