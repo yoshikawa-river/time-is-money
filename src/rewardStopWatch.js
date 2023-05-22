@@ -60,18 +60,18 @@ export const RewardStopWatch = () => {
             reward: reward,
             startTime: startTime,
             elapsedTime: elapsedTime,
-            time: time
+            time: time,
         };
 
-        localStorage.setItem('stopwatch', JSON.stringify(data));
+        localStorage.setItem('rewardStopwatch', JSON.stringify(data));
     };
 
     const deleteLocalStorage = () => {
-        localStorage.removeItem('stopwatch');
+        localStorage.removeItem('rewardStopwatch');
     };
 
     const loadLocalStorage = () => {
-        const data = localStorage.getItem('stopwatch');
+        const data = localStorage.getItem('rewardStopwatch');
         if (data) {
             const parsedData = JSON.parse(data);
             setStartTime(parsedData.startTime);

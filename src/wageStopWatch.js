@@ -61,18 +61,18 @@ export const WageStopWatch = () => {
             reward: reward,
             startTime: startTime,
             elapsedTime: elapsedTime,
-            time: time
+            time: time,
         };
 
-        localStorage.setItem('stopwatch', JSON.stringify(data));
+        localStorage.setItem('wageStopwatch', JSON.stringify(data));
     };
 
     const deleteLocalStorage = () => {
-        localStorage.removeItem('stopwatch');
+        localStorage.removeItem('wageStopwatch');
     };
 
     const loadLocalStorage = () => {
-        const data = localStorage.getItem('stopwatch');
+        const data = localStorage.getItem('wageStopwatch');
         if (data) {
             const parsedData = JSON.parse(data);
             setStartTime(parsedData.startTime);
