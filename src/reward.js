@@ -48,10 +48,6 @@ export const Reward = ({reward, elapsedTime}) => {
     }
 
     const toJapaneseYen = (amount, type) => {
-        if (amount < 10000) {
-            return amount;
-        }
-
         let displayWage = '';
         let unitsIndex = 0;
         // 下4桁ずつ単位を振っていき、下の桁数が4桁未満になるまでループを回す
@@ -96,7 +92,7 @@ export const Reward = ({reward, elapsedTime}) => {
                                     value={remainder}
                                     speed={1000}
                                     decimals={decimals}
-                                    ease='expoInOut'
+                                    ease='quintInOut'
                                 />
                             </div>
                             <div className="unit-font">{units[unitsIndex]}</div>{displayWage}
@@ -117,6 +113,7 @@ export const Reward = ({reward, elapsedTime}) => {
                 </>
         } else {
             const style = `display-hourlywage-content-${unitsIndex} display-hourlywage-content`
+            const decimals = unitsIndex === 0 ? 2 : 0;
             // 最後の桁を追加
             displayWage =
                     <>
@@ -125,7 +122,8 @@ export const Reward = ({reward, elapsedTime}) => {
                                 <NumberEasing
                                     value={Math.floor(amount)}
                                     speed={1000}
-                                    ease='elasticIn'
+                                    decimals={decimals}
+                                    ease='quintInOut'
                                 />
                             </div>
                             <div className="unit-font">{units[unitsIndex]}</div>{displayWage}
@@ -138,7 +136,7 @@ export const Reward = ({reward, elapsedTime}) => {
 
     return (
         <div>
-            <p className="money-content__p">
+            <div className="money-content__p">
                 ほうしゅう
                 <span className="display-reward-container flex">
                     {isDisplayUnit ? toJapaneseYen(reward, 'reward') : toCurrency(reward, 'reward')}
@@ -146,8 +144,8 @@ export const Reward = ({reward, elapsedTime}) => {
                         えん
                     </span> */}
                 </span>
-            </p>
-            <p className="money-content__p">
+            </div>
+            <div className="money-content__p">
                 じきゅう
                 <div className="display-hourlywage-container flex">
                     {isDisplayUnit ? toJapaneseYen(hourlyWage, 'wage') : toCurrency(hourlyWage, 'wage')}
@@ -155,7 +153,7 @@ export const Reward = ({reward, elapsedTime}) => {
                         えん
                     </span> */}
                 </div>
-            </p>
+            </div>
             <div className="money-content__p">
                 <Switch
                     checked={isDisplayUnit}
