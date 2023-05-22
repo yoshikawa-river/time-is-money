@@ -4,7 +4,7 @@ import NumberEasing from 'react-number-easing';
 import './css/money.css';
 import CountUp from 'react-countup';
 
-export const Money = ({reward, elapsedTime}) => {
+export const Reward = ({reward, elapsedTime}) => {
     const [beforeHourlyWage, setBeforeWage] = useState(0);
     const [hourlyWage, setHourlyWage] = useState(0);
     const [isDisplayUnit, setDisplayUnit] = useState(true);

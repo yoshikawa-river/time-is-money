@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Money } from "./money";
+import { Reward } from "./reward";
 import { InputReward } from "./inputReward";
 import { InputTime } from "./inputTime";
 import Button from '@mui/material/Button';
@@ -200,7 +200,7 @@ export const RewardStopWatch = () => {
             <div className="main">
                 <div className="main-content">
                     <InputReward reward={reward} onChange={onChangeReward} placeholder={'報酬金額'} startBtnState={btnDisabled.start}/>
-                    <Money reward={reward} elapsedTime={elapsedTime} />
+                    <Reward reward={reward} elapsedTime={elapsedTime} />
                     <div className="stopwatch-content">
                         <div className="stopwatch-content__p">
                             <Switch
