@@ -14,8 +14,6 @@ let worker;
 export const RewardStopWatch = () => {
     // 報酬額
     const [reward, setReward] = useState(0);
-    // 表示タイプ
-    const [displayType, setDisplayType] = useState(true);
     // 経過時間（秒）
     const [startTime, setStartTime] = useState(0);
     // 時間の保存
