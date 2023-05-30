@@ -122,7 +122,7 @@ export const Reward = ({reward, elapsedTime}) => {
                 decimals = 0;
                 amount = Math.floor(amount);
             }
-            
+
             // 最後の桁を追加
             displayWage =
                     <>
