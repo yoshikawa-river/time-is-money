@@ -13,19 +13,19 @@ export default function Header({onChange}) {
     };
 
     return (
-        <Box sx={{ width: '50%' }} className="header-container" >
+        <Box sx={{ width: '100%' }} className="header-container" >
         <Tabs
             value={value}
             onChange={handleChange}
             aria-label="secondary tabs example"
         >
             <Tab
-                style={{ 'fontSize': '2rem', 'width': '100%', 'fontWeight': 'bold', 'marginLeft':'auto', 'fontFamily': 'Darumadrop One, cursive' }}
+                style={{ 'fontSize': '2rem', 'width': '50%', 'fontWeight': 'bold', 'marginLeft':'auto', 'fontFamily': 'Darumadrop One, cursive' }}
                 value={0}
                 label="ほうしゅうがた"
             />
             <Tab
-                style={{ 'fontSize': '2rem', 'width': '100%', 'fontWeight': 'bold', 'marginRight':'auto', 'fontFamily': 'Darumadrop One, cursive'}}
+                style={{ 'fontSize': '2rem', 'width': '50%', 'fontWeight': 'bold', 'marginRight':'auto', 'fontFamily': 'Darumadrop One, cursive'}}
                 value={1}
                 label="じきゅうがた"
             />
