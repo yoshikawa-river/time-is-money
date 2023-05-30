@@ -7,10 +7,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import timeismoney_img from './timeismoney_img.png';
 import { ReactComponent as Investicon } from "./undraw_investing_re_bov7.svg";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 export default function UsageScrollDialog() {
     const [open, setOpen] = React.useState(false);
     const [scroll, setScroll] = React.useState('paper');
+    const [isNotDisplay, setIsNotDisplay] = React.useState(false);
 
     const handleClickOpen = (scrollType) => () => {
         setOpen(true);
@@ -20,6 +23,26 @@ export default function UsageScrollDialog() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handlerChange = () => {
+        setIsNotDisplay(!isNotDisplay);
+        saveLocalStorage();
+    }
+
+    const saveLocalStorage = () => {
+        localStorage.setItem('isNotDisplay', !isNotDisplay);
+    }
+
+    React.useEffect(() => {
+        const data = localStorage.getItem('isNotDisplay');
+        const parsedData = JSON.parse(data);
+        if (parsedData === null || !parsedData) {
+            setOpen(true);
+        } else {
+            setIsNotDisplay(parsedData);
+            setOpen(false);
+        }
+    }, []);
 
     const descriptionElementRef = React.useRef(null);
     React.useEffect(() => {
@@ -91,9 +114,12 @@ export default function UsageScrollDialog() {
                     <h3 className='text-5xl pt-4 pb-5'>
                         「じきゅうがた」は、時給単価を入力して1秒ごとに合計金額を計算します
                     </h3>
-                    <h3>
-
-                    </h3>
+                    <FormControlLabel
+                        control={
+                            <Checkbox onChange={handlerChange} checked={isNotDisplay}/>
+                        }
+                        label="次回から表示しない"
+                    />
                 </div>
             </DialogContentText>
             </DialogContent>
