@@ -78,13 +78,14 @@ export default function UsageScrollDialog() {
                 たいむいずまねーとは
             </DialogTitle>
             <DialogContent dividers={scroll === 'paper'} sx={{
-                    backgroundColor: 'rgb(241 245 249)'
+                    backgroundColor: 'rgb(241 245 249)',
+                    fontFamily: 'Roboto, Helvetica, Arial, sans-serif'
                 }}>
-            <DialogContentText
+            {/* <DialogContentText
                 id="scroll-dialog-description"
                 ref={descriptionElementRef}
                 tabIndex={-1}
-            >
+            > */}
                 <div className='p-11 text-center'>
                     <h2 className='text-9xl text-orange-400'>
                         時給を決めるのは<br/>あなたの実力
@@ -98,13 +99,14 @@ export default function UsageScrollDialog() {
                             <h2 className='text-5xl py-6 pt-20 pb-10 font-bold text-blue-600'>
                                 今の案件って、時給換算するといくらなんだろう？
                             </h2>
-
-                            <p className='text-5xl pb-10 font-bold'>
-                                のような疑問を解決。
-                            </p>
-                            <p className='text-5xl pb-20 font-bold'>
-                                1秒ごとに時給を計算します。
-                            </p>
+                            <div>
+                                <p className='text-5xl pb-10 font-bold'>
+                                    のような疑問を解決。
+                                </p>
+                                <p className='text-5xl pb-20 font-bold'>
+                                    1秒ごとに時給を計算します。
+                                </p>
+                            </div>
                         </div>
                         <Investicon className='w-1/5 h-full my-auto'/>
                     </div>
@@ -121,7 +123,7 @@ export default function UsageScrollDialog() {
                         label="次回から表示しない"
                     />
                 </div>
-            </DialogContentText>
+            {/* </DialogContentText> */}
             </DialogContent>
             <DialogActions>
             <Button onClick={handleClose} sx={{ fontSize:'2rem' }}>閉じる</Button>
